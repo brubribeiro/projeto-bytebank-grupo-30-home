@@ -1,4 +1,4 @@
-@import '../../../styles/tokens';
+@import "../../../styles/tokens";
 
 :host {
   .footer {
@@ -20,11 +20,31 @@
   }
 
   .footer-column-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-items: center;
+    gap: 12px;
 
     h3 {
-      margin-bottom: 12px;
       color: white;
+    }
+
+    .logo {
+      width: 120px;
+    }
+
+    .social-icons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      button {
+        color: white;
+        background-color: $brand-950;
+      }
     }
   }
 
@@ -46,16 +66,6 @@
         margin-bottom: 8px;
       }
     }
-
-    .logo {
-      width: 120px;
-      margin-bottom: 12px;
-    }
-
-    .social-icons button {
-      margin-right: 8px;
-      color: white;
-    }
   }
 
   @media screen and (max-width: 360px) {
@@ -74,16 +84,16 @@
 
   @media screen and (max-width: 720px) {
     .footer {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 0px 16px;
-  }
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 0px 16px;
+    }
 
-  .footer-content{
-    gap: 4px;
-  }
+    .footer-content {
+      gap: 4px;
+    }
 
     .footer-column {
       margin-bottom: 24px;
