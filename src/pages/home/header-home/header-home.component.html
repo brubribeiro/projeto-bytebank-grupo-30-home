@@ -1,0 +1,34 @@
+<mat-toolbar class="header header--menu">
+  <button
+    mat-icon-button
+    class="header__menu-button"
+    [matMenuTriggerFor]="menu"
+    aria-label="Menu"
+  >
+    <mat-icon fontIcon="menu"></mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <ng-container *ngFor="let item of menuItems">
+      <a mat-menu-item [href]="item.route" [class.active]="item.active">
+        <span>{{ item.label }}</span>
+      </a>
+    </ng-container>
+  </mat-menu>
+
+  <span class="header__logo">
+    <img src="assets/Logo.svg" alt="Bytebank" class="header__logo-img" height="24" />
+    <img src="assets/logo-min.svg" alt="Bytebank" class="header__logo-img header__logo-img--tablet" height="24" />
+  </span>
+
+  <nav class="header__menu">
+    <a
+      *ngFor="let item of menuItems"
+      [href]="item.label === 'Abrir minha conta' ? '#' : item.route"
+      class="header__menu-item"
+      [ngClass]="item.class"
+      (click)="onMenuItemClick(item, $event)">
+      {{ item.label }}
+    </a>
+  </nav>
+</mat-toolbar>

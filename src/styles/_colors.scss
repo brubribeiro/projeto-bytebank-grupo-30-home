@@ -1,0 +1,56 @@
+// Primary
+$primary-500: #00afc9;
+$primary-600: #008aa1;
+$primary-700: #086e82;
+$primary-800: #0c5a6d;
+$primary-900: #004d61;
+
+// Secondary
+$secondary-500: #ffac9d;
+$secondary-600: #f7b764;
+$secondary-700: #ff5031;
+$secondary-800: #ed3615;
+$secondary-900: #c8290d;
+
+// Background
+$bg-500: #f6f9f9;
+$bg-600: #ebf2f3;
+$bg-700: #dee9ea;
+$bg-800: #aecacb;
+$bg-900: #81adaf;
+
+// Neutral
+$neutral-50: #f8f8f8;
+$neutral-100: #efefef;
+$neutral-200: #dcdcdc;
+$neutral-300: #bdbdbd;
+$neutral-400: #989898;
+$neutral-500: #7c7c7c;
+$neutral-600: #656565;
+$neutral-700: #525252;
+$neutral-800: #464646;
+$neutral-900: #3d3d3d;
+$neutral-950: #292929;
+
+// Brand
+$brand-500: #47a138;
+$brand-950: #000000;
+
+// Alias para uso rápido
+$color-primary: $primary-900;
+$color-secondary: $secondary-700;
+$color-background: $bg-500;
+$color-background-secondary: $bg-600;
+$color-background-tertiary: $bg-700;
+$color-text-primary: $neutral-950;
+$color-text-secondary: $neutral-700;
+$color-text-on-primary: #fff;
+$color-error: $secondary-900;
+$color-success: $brand-500;
+
+// Cores de texto
+$color-text-disabled: rgba(0, 0, 0, 0.38);
+$color-info: #2196f3;
+
+// Cores de fundo
+$color-background-disabled: #e0e0e0;

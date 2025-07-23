@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="content">
+    <h1>
+      Experimente mais liberdade no controle da sua vida financeira. Crie sua
+      conta com a gente!
+    </h1>
+    <div class="image-container">
+      <img src="assets/Ilustracao-banner.svg" />
+    </div>
+  </div>
+  <div class="advantages">
+    <h2>Vantagens do nosso banco:</h2>
+    <mat-list role="list" class="advantages-list">
+      @for (item of advantages; track item) {
+      <li>
+        <img [src]="item.icon" aria-hidden="true" />
+        <h3>{{ item.title }}</h3>
+        <span>{{ item.text }}</span>
+      </li>
+      }
+    </mat-list>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+@import '../../../styles/tokens';
+
+:host {
+  .footer {
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: $brand-950;
+    padding: 40px 0;
+  }
+
+  .footer-content {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .footer-column-icons {
+    justify-items: center;
+
+    h3 {
+      margin-bottom: 12px;
+      color: white;
+    }
+  }
+
+  .footer-column {
+    flex: 1;
+    min-width: 200px;
+
+    h3 {
+      margin-bottom: 12px;
+      color: white;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        color: white;
+        margin-bottom: 8px;
+      }
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 12px;
+    }
+
+    .social-icons button {
+      margin-right: 8px;
+      color: white;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .footer-content {
+      padding: 0px 65px;
+    }
+
+    .footer-column {
+      margin-bottom: 24px;
+    }
+
+    .footer-column-icons {
+      margin-bottom: 24px;
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .footer {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0px 16px;
+  }
+
+  .footer-content{
+    gap: 4px;
+  }
+
+    .footer-column {
+      margin-bottom: 24px;
+    }
+
+    .footer-column-icons {
+      margin-bottom: 24px;
+    }
+  }
+}

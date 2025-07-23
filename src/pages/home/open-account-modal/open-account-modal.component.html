@@ -1,0 +1,39 @@
+<div class="modal-container">
+
+  <button mat-icon-button class="close-btn" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+  
+  <div class="modal-illustration">
+    <img src="assets/nova-conta.svg" alt="Ilustração"/>
+  </div>
+
+  <h2 class="modal-title">Preencha os campos abaixo para criar sua conta corrente!</h2>
+  
+  <form>
+    
+    <mat-form-field appearance="outline" class="modal-field">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Digite seu nome completo" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="modal-field">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Digite seu email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="modal-field">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" placeholder="Digite sua senha" required>
+    </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="aceito" name="aceito" color="primary">
+      Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco.
+    </mat-checkbox>
+
+    <div class="modal-actions">
+      <button mat-flat-button color="warn" [disabled]="!aceito">Criar conta</button>
+    </div>
+  </form>
+
+</div>

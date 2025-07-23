@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/tokens';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-body-sm-size;
+  color: $color-text-primary;
+  background-color: $color-background;
+  line-height: 1.5;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Inter", Roboto, "Helvetica Neue", sans-serif; }
+

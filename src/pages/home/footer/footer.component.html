@@ -1,0 +1,37 @@
+<mat-toolbar class="footer">
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3>Serviços</h3>
+      <ul>
+        @for (item of servicos; track item) {
+        <li>{{ item.text }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>Contato</h3>
+      <ul>
+        @for (item of contato; track item) {
+        <li>{{ item.text }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="footer-column-icons">
+      <h3>Desenvolvido por</h3>
+      <img src="assets/logo-footer.svg" alt="Logo Bytebank" class="logo" />
+      <div class="social-icons">
+        <button mat-icon-button aria-label="Instagram">
+          <mat-icon svgIcon="instagram"></mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Facebook">
+          <mat-icon svgIcon="whatsapp"></mat-icon>
+        </button>
+        <button mat-icon-button aria-label="YouTube">
+          <mat-icon svgIcon="youtube"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

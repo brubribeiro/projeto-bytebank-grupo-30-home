@@ -1,0 +1,63 @@
+@import "../../../styles/tokens";
+
+.modal {
+  &__container {
+    background: #fafafa;
+    padding: 32px 64px 24px 64px;
+    border-radius: 12px;
+    position: relative;
+    min-width: 350px;
+    max-width: 680px;
+    box-shadow: 0 8px 32px #0002;
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+
+  &__illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    position: relative;
+
+    &-img {
+      height: 120px;
+    }
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  &__field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  &__checkbox {
+    margin-bottom: 18px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  &__button[mat-flat-button] {
+    background: $brand-500;
+    color: #fff;
+    border-radius: 8px;
+    min-width: 160px;
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}

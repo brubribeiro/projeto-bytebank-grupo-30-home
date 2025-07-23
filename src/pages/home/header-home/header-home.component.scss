@@ -1,0 +1,191 @@
+@import "../../../styles/tokens";
+
+:host {
+  .header {
+    height: 96px !important;
+    width: 100%;
+    background-color: $brand-950;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 200px;
+
+    span {
+      color: $brand-500;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-text-on-primary;
+      }
+    }
+
+    img {
+      width: 145.69px;
+      height: 32px;
+    }
+
+    .button-header {
+      display: flex;
+      gap: 24px;
+    }
+
+    .button-primary {
+      background-color: $brand-500;
+      color: $neutral-100;
+      border-radius: $spacing-xs;
+    }
+
+    .button-secondary {
+      background-color: $brand-950;
+      color: $brand-500;
+      border-radius: $spacing-xs;
+      border: 2px solid $brand-500;
+    }
+
+    .icon-header {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    mat-icon {
+      color: $brand-500;
+    }
+
+    &__logo {
+      // container da logo
+    }
+
+    &__logo-img {
+      // estilos padrão da logo
+      height: 24px;
+      width: auto;
+
+      &--tablet {
+        display: none;
+        width: 26px !important;
+        height: 26px !important;
+      }
+    }
+
+    &__menu {
+      display: flex;
+      gap: 24px;
+      margin-left: auto;
+    }
+
+    &__menu-item {
+      color: $brand-500;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 500;
+      font-size: 16px;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      &--active,
+      &:hover {
+        background: $brand-500;
+        color: $neutral-100;
+      }
+    }
+
+    &__menu-button {
+      display: none;
+    }
+
+    &__actions {
+      display: flex;
+      gap: 16px;
+      margin-left: 32px;
+    }
+
+    &__action {
+      padding: 8px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      border: 2px solid transparent;
+      cursor: pointer;
+
+      &--primary {
+        background: $brand-500;
+        color: $neutral-100;
+        border-color: $brand-500;
+      }
+      &--secondary {
+        background: transparent;
+        color: $brand-500;
+        border-color: $brand-500;
+      }
+      &--primary:hover,
+      &--secondary:hover {
+        background: $brand-500;
+        color: $neutral-100;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      &__logo-img {
+        display: none;
+        &--tablet {
+          display: inline !important;
+        }
+      }
+    }
+    @media (max-width: 767px) {
+      &__menu {
+        display: none;
+      }
+      &__menu-button {
+        display: block;
+      }
+      &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 16px auto 0 auto;
+        width: 100%;
+        align-items: center;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .header {
+      padding: 0 40px;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .header {
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      gap: 16px;
+    }
+  }
+
+  .logo-tablet {
+    display: none;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .logo-desktop {
+      display: none;
+    }
+
+    .logo-tablet {
+      display: inline;
+    }
+  }
+}

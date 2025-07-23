@@ -1,0 +1,29 @@
+<div class="modal__container">
+
+  <button mat-icon-button class="modal__close-btn" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+  
+  <div class="modal__illustration">
+    <img src="assets/login.svg" alt="Ilustração" class="modal__illustration-img"/>
+  </div>
+
+  <h2 class="modal__title">Login</h2>
+  
+  <form>
+    <mat-form-field appearance="outline" class="modal__field">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Digite seu email" [(ngModel)]="email" name="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="modal__field">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" placeholder="Digite sua senha" [(ngModel)]="senha" name="senha" required>
+    </mat-form-field>
+
+    <div class="modal__actions">
+      <button mat-flat-button color="warn" class="modal__button" [disabled]="isButtonDisabled" (click)="acessar()">Acessar</button>
+    </div>
+  </form>
+
+</div>
