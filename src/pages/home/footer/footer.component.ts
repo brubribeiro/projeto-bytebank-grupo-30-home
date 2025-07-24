@@ -3,10 +3,12 @@ import { Component, Input } from '@angular/core';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatToolbarModule],
+  imports: [CommonModule, MatIconModule, MatToolbarModule, MatButtonModule],
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
