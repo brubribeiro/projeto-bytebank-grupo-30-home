@@ -80,6 +80,7 @@
 							"src/assets"
 						],
 						"styles": [
+              "src/styles/_material-theme.scss",
 							"src/styles.scss"
 						],
 						"scripts": []
