@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { AccountService } from '../../../services/account.service';
 
 @Component({
   standalone: true,
@@ -21,7 +22,8 @@ export class LoginModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<LoginModalComponent>,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ) { }
 
   close(): void {
@@ -30,6 +32,17 @@ export class LoginModalComponent {
 
   get isButtonDisabled(): boolean {
     return !this.email.trim() || !this.senha.trim();
+  }
+
+  login(credentials: any): void {
+    this.accountService.auth(credentials).subscribe({
+      next: (loginResponse : any) => {
+        console.log('Login realizado com sucesso:', loginResponse);
+        // TODO: set token in local storage or state management
+        window?.localStorage?.setItem('authToken', loginResponse?.result?.token);
+      },
+      error: (err) => console.error('Erro ao fazer login:', err),
+    });
   }
 
   acessar(): void {
