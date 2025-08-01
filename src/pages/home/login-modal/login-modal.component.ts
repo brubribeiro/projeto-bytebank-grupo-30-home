@@ -1,54 +1,148 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component }  from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { AccountService } from '../../../services/account.service';
+import { UserService } from 'src/services/user.service';
+import { User } from 'src/models/user.model';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule],
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss'
 })
 export class LoginModalComponent {
-  email: string = '';
-  senha: string = '';
+  loginForm: FormGroup<{
+    email: FormControl<string>;
+    password: FormControl<string>;
+  }>;
+  isLoading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<LoginModalComponent>,
     private router: Router,
-    private accountService: AccountService
-  ) { }
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    this.loginForm = this.fb.group({
+      email: this.fb.control('', {
+        validators: [Validators.required, Validators.email],
+        nonNullable: true
+      }),
+      password: this.fb.control('', {
+        validators: [Validators.required, Validators.minLength(5)],
+        nonNullable: true
+      })
+    });
+  }
+
+  // Custom validator for login errors
+  private loginErrorValidator(errorMessage: string) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return errorMessage ? { loginError: { message: errorMessage } } : null;
+    };
+  }
+
+  // Method to set login error on password field
+  private setLoginError(errorMessage: string): void {
+    const passwordControl = this.loginForm.get('password');
+    if (passwordControl) {
+      passwordControl.setValidators([
+        Validators.required,
+        Validators.minLength(5),
+        this.loginErrorValidator(errorMessage)
+      ]);
+      passwordControl.updateValueAndValidity();
+    }
+  }
+
+  // Method to clear login error
+  private clearLoginErrorValidator(): void {
+    const passwordControl = this.loginForm.get('password');
+    if (passwordControl) {
+      passwordControl.setValidators([
+        Validators.required,
+        Validators.minLength(5)
+      ]);
+      passwordControl.updateValueAndValidity();
+    }
+  }
 
   close(): void {
     this.dialogRef.close();
   }
 
   get isButtonDisabled(): boolean {
-    return !this.email.trim() || !this.senha.trim();
+    return this.loginForm.invalid || this.isLoading;
   }
 
-  login(credentials: any): void {
-    this.accountService.auth(credentials).subscribe({
-      next: (loginResponse : any) => {
-        console.log('Login realizado com sucesso:', loginResponse);
-        // TODO: set token in local storage or state management
-        window?.localStorage?.setItem('authToken', loginResponse?.result?.token);
-      },
-      error: (err) => console.error('Erro ao fazer login:', err),
-    });
+  clearLoginError(): void {
+    this.clearLoginErrorValidator();
+  }
+
+  getErrorMessage(field: keyof Pick<User, 'email' | 'password'>): string {
+    const control = this.loginForm.get(field);
+
+    // Check for login error first (highest priority)
+    if (control?.hasError('loginError')) {
+      return control.getError('loginError').message;
+    }
+
+    if (control?.hasError('required')) {
+      return `${field === 'email' ? 'Email' : 'Senha'} é obrigatório`;
+    }
+    if (control?.hasError('email')) {
+      return 'Email deve ter um formato válido';
+    }
+    if (control?.hasError('minlength')) {
+      return 'Senha deve ter pelo menos 5 caracteres';
+    }
+    return '';
+  }
+
+  login(): void {
+    if (this.loginForm.valid && !this.isLoading) {
+      this.isLoading = true;
+      this.clearLoginErrorValidator();
+
+      const credential: Pick<User, 'email' | 'password'> = {
+        email: this.loginForm.value.email!,
+        password: this.loginForm.value.password!
+      };
+
+      this.userService.login(credential).subscribe({
+        next: (token: string) => {
+          this.isLoading = false;
+          console.log('Login realizado com sucesso:', token);
+
+          // Check if login was successful
+          if (token) {
+            window?.localStorage?.setItem('authToken', token);
+            this.dialogRef.close();
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.setLoginError('E-mail ou senha inválidos');
+          }
+        },
+        error: (errorMessage: string) => {
+          this.isLoading = false;
+          console.error('Erro ao fazer login:', errorMessage);
+          this.setLoginError(errorMessage);
+        },
+      });
+    }
   }
 
   acessar(): void {
     if (!this.isButtonDisabled) {
-      this.dialogRef.close();
-      this.router.navigate(['/dashboard']);
+      this.login();
     }
   }
 }
