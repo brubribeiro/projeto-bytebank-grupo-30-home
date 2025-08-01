@@ -34,7 +34,7 @@ export abstract class BaseService<T> {
     return this.http.delete<void>(`${this.baseUrl}/${this.entityPath}/${id}`);
   }
 
-  auth(credentials: { username: string; password: string }) {
+  auth(credentials: {email: string, password: string}) {
     return this.http.post(`${this.baseUrl}/user/auth`, credentials);
   }
 }
