@@ -29,35 +29,45 @@ export class HeaderHomeComponent {
   openAccountModal() {
     this.dialog.open(OpenAccountModalComponent, {
       width: '420px',
-      panelClass: 'custom-modal'
+      maxWidth: '90vw',
+      panelClass: 'byte-bank-dialog'
     });
   }
 
   openLoginModal() {
     this.dialog.open(LoginModalComponent, {
       width: '420px',
-      panelClass: 'custom-modal'
+      maxWidth: '90vw',
+      panelClass: 'byte-bank-dialog'
     });
   }
 
-  openAccountClick(item: any, event: Event): void {
-    if (item.label === 'Abrir minha conta') {
-      event.preventDefault();
-      this.onMenuItemClick(item, event);
-    }
-  }
-
-  onMenuItemClick(item: any, event: Event): void {
+  onMenuItemClick(item: MenuItem, event: Event): void {
     event.preventDefault();
     this.menuItems.forEach(menuItem => menuItem.active = false);
     item.active = true;
 
-    if (item.label === 'Abrir minha conta') {
-      this.openAccountModal();
+    switch(item.label) {
+      case 'Abrir minha conta':
+        this.openAccountModal();
+        break;
+      case 'Já tenho conta':
+        this.openLoginModal();
+        break;
     }
+  }
 
-    if (item.label === 'Já tenho conta') {
-      this.openLoginModal();
+  onMobileMenuClick(item: MenuItem): void {
+    this.menuItems.forEach(menuItem => menuItem.active = false);
+    item.active = true;
+
+    switch(item.label) {
+      case 'Abrir minha conta':
+        this.openAccountModal();
+        break;
+      case 'Já tenho conta':
+        this.openLoginModal();
+        break;
     }
   }
 }

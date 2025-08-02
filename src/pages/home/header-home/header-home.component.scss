@@ -10,9 +10,10 @@
     align-items: center;
     padding: 0 200px;
 
-    span {
+    span, button, a {
       color: $brand-500;
       cursor: pointer;
+      text-decoration: none;
 
       &:hover {
         color: $color-text-on-primary;
@@ -72,6 +73,7 @@
       display: flex;
       gap: 24px;
       margin-left: auto;
+      align-items: center; // Add this to align items vertically
     }
 
     &__menu-item {
@@ -116,7 +118,7 @@
 
       &--primary {
         background: $brand-500;
-        color: $neutral-100;
+        color: $neutral-100 !important;
         border-color: $brand-500;
       }
       &--secondary {
@@ -124,7 +126,10 @@
         color: $brand-500;
         border-color: $brand-500;
       }
-      &--primary:hover,
+      &--primary:hover {
+        background: transparent;
+        color: $brand-500 !important;
+      }
       &--secondary:hover {
         background: $brand-500;
         color: $neutral-100;
@@ -149,16 +154,40 @@
       &__actions {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin: 16px auto 0 auto;
+        gap: 16px; // Increased gap for better spacing
+        margin: 16px auto;
         width: 100%;
         align-items: center;
+
+        a, button {
+          width: 100%;
+          text-align: center;
+          padding: 12px 24px; // Increased padding for better touch targets
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 48px; // Ensure consistent height
+        }
       }
     }
-  }
 
-  @media (max-width: 1024px) {
-    .header {
+    // Update mat-menu styling for mobile
+    ::ng-deep .mat-mdc-menu-panel {
+      .mat-mdc-menu-content {
+        padding: 16px !important;
+
+        .mat-mdc-menu-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 48px;
+          margin: 8px 0;
+          text-align: center;
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
       padding: 0 40px;
       gap: 24px;
     }
@@ -188,4 +217,44 @@
       display: inline;
     }
   }
+
+
+    .mat-mdc-dialog-container {
+      padding: 0;
+    }
+
+    // Override Material Dialog width
+    &.mat-mdc-dialog-container,
+    .cdk-overlay-pane.mat-mdc-dialog-panel {
+      min-width: 90vw !important;
+      max-width: 90vw !important;
+    }
+
+    @media (max-width: 599px) {
+      .cdk-overlay-pane.mat-mdc-dialog-panel {
+        max-width: 90vw !important;
+      }
+    }
+
+    .mat-mdc-dialog-surface {
+      max-height: 90vh !important; // Ensure modal doesn't exceed viewport height
+      overflow-y: auto !important; // Enable vertical scrolling
+    }
+
+    .mdc-dialog__content {
+      padding: 20px;
+      overflow-y: auto !important;
+      max-height: calc(90vh - 64px) !important; // Account for header height
+    }
+
+    @media (max-width: 767px) {
+      .mat-mdc-dialog-container {
+        margin: 16px;
+      }
+
+      .mdc-dialog__content {
+        max-height: calc(100vh - 120px) !important; // Adjust for mobile
+        padding-bottom: 80px; // Add padding to ensure button visibility
+      }
+    }
 }
