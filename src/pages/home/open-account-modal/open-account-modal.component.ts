@@ -110,18 +110,18 @@ export class OpenAccountModalComponent {
       const { username, email, password, aceito } = this.openAccountForm.value;
 
       if (!aceito) {
-        // Handle case where user did not accept terms
         console.error('Usuário não aceitou os termos');
         return;
       }
 
-      const user: Omit<User, 'id'> = {
-        username: username ??  '',
-        email: email ??  '',
-        password: password ??  ''
-      };
+      // Simplify the payload to match the working curl request
+      const user = {
+        username,
+        email,
+        password
+      } as unknown as User;
 
-      this.userService.createUser(user as User).subscribe({
+      this.userService.createUser(user).subscribe({
         next: (createdUser: User) => {
           console.log('Conta criada com sucesso:', createdUser);
 
