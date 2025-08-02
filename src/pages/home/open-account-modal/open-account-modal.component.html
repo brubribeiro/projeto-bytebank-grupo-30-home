@@ -3,36 +3,54 @@
   <button mat-icon-button class="close-btn" (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
-  
+
   <div class="modal-illustration">
     <img src="assets/nova-conta.svg" alt="Ilustração"/>
   </div>
 
   <h2 class="modal-title">Preencha os campos abaixo para criar sua conta corrente!</h2>
-  
-  <form>
-    
+
+  <form [formGroup]="openAccountForm" (ngSubmit)="createAccount()">
+
     <mat-form-field appearance="outline" class="modal-field">
       <mat-label>Nome</mat-label>
-      <input matInput placeholder="Digite seu nome completo" required>
+      <input matInput placeholder="Digite seu nome completo" formControlName="username">
+      <mat-error *ngIf="openAccountForm.get('username')?.invalid && openAccountForm.get('username')?.touched">
+        {{ getErrorMessage('username') }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="modal-field">
       <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Digite seu email" required>
+      <input matInput type="email" placeholder="Digite seu email" formControlName="email">
+      <mat-error *ngIf="openAccountForm.get('email')?.invalid && openAccountForm.get('email')?.touched">
+        {{ getErrorMessage('email') }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="modal-field">
       <mat-label>Senha</mat-label>
-      <input matInput type="password" placeholder="Digite sua senha" required>
+      <input matInput type="password" placeholder="Digite sua senha" formControlName="password">
+      <mat-error *ngIf="openAccountForm.get('password')?.invalid && openAccountForm.get('password')?.touched">
+        {{ getErrorMessage('password') }}
+      </mat-error>
     </mat-form-field>
 
-    <mat-checkbox [(ngModel)]="aceito" name="aceito" color="primary">
+    <mat-checkbox formControlName="aceito" color="primary" class="modal-checkbox">
       Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco.
     </mat-checkbox>
+    <mat-error *ngIf="openAccountForm.get('aceito')?.invalid && openAccountForm.get('aceito')?.touched" class="checkbox-error">
+      {{ getErrorMessage('aceito') }}
+    </mat-error>
 
     <div class="modal-actions">
-      <button mat-flat-button color="warn" [disabled]="!aceito">Criar conta</button>
+      <button mat-flat-button color="warn" type="submit" [disabled]="isButtonDisabled">
+        <span *ngIf="!isLoading">Criar conta</span>
+        <span *ngIf="isLoading" class="modal-button-loading">
+          Criando conta...
+          <mat-spinner diameter="16" class="modal-button-spinner"></mat-spinner>
+        </span>
+      </button>
     </div>
   </form>
 
