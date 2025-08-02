@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   useLocalDb: false,
-  apiBaseUrl: 'https://bybank-back-end.onrender.com/',
+  apiBaseUrl: 'https://bybank-back-end.onrender.com',
   apiVersion: '/v1',
   apiNamespace: '/bytebank',
   shell: {
