@@ -149,7 +149,7 @@ export class OpenAccountModalComponent {
 
                   // Usar o serviço compartilhado
                   await this.sharedAuthWrapper.login(token, userWithToken);
-                  
+
                   this.dialogRef.close(createdUser);
                   // Navegar através do shell
                   window.location.href = '/dashboard';
