@@ -1,0 +1,33 @@
+.byte-bank-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+  }
+
+  .mat-mdc-dialog-surface {
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+
+  .mdc-dialog__content {
+    padding: 20px;
+    overflow-y: auto !important;
+    max-height: calc(90vh - 64px) !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .byte-bank-dialog {
+    .mat-mdc-dialog-container {
+      margin: 16px;
+    }
+
+    .cdk-overlay-pane {
+      max-width: 90vw !important;
+    }
+
+    .mdc-dialog__content {
+      max-height: calc(100vh - 120px) !important;
+      padding-bottom: 80px;
+    }
+  }
+}
