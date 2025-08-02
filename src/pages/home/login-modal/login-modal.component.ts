@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl, A
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from 'src/services/user.service';
 import { User } from 'src/models/user.model';
+import { SharedAuthServiceWrapper } from 'src/services/shared-auth-wrapper.service';
 
 @Component({
   standalone: true,
@@ -29,7 +30,8 @@ export class LoginModalComponent {
     public dialogRef: MatDialogRef<LoginModalComponent>,
     private router: Router,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sharedAuthWrapper: SharedAuthServiceWrapper
   ) {
     this.loginForm = this.fb.group({
       email: this.fb.control('', {
@@ -118,15 +120,31 @@ export class LoginModalComponent {
       };
 
       this.userService.login(credential).subscribe({
-        next: (token: string) => {
+        next: async (token: string) => {
           this.isLoading = false;
           console.log('Login realizado com sucesso:', token);
 
           // Check if login was successful
           if (token) {
-            window?.localStorage?.setItem('authToken', token);
-            this.dialogRef.close();
-            this.router.navigate(['/dashboard']);
+            try {
+              // Decodificar informações do usuário do token (opcional)
+              const payload = JSON.parse(atob(token.split('.')[1]));
+              const user = {
+                id: payload.id,
+                username: payload.username,
+                email: payload.email
+              };
+
+              // Usar o serviço compartilhado
+              await this.sharedAuthWrapper.login(token, user);
+              
+              this.dialogRef.close();
+              // Navegar através do shell
+              window.location.href = '/dashboard';
+            } catch (error) {
+              console.error('Erro ao processar login:', error);
+              this.setLoginError('Erro interno. Tente novamente.');
+            }
           } else {
             this.setLoginError('E-mail ou senha inválidos');
           }

@@ -11,6 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.model';
+import { SharedAuthServiceWrapper } from '../../../services/shared-auth-wrapper.service';
 
 @Component({
   standalone: true,
@@ -42,7 +43,8 @@ export class OpenAccountModalComponent {
     public dialogRef: MatDialogRef<OpenAccountModalComponent>,
     private userService: UserService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private sharedAuthWrapper: SharedAuthServiceWrapper
   ) {
     this.openAccountForm = this.fb.group({
       username: this.fb.control('', {
@@ -130,15 +132,31 @@ export class OpenAccountModalComponent {
           };
 
           this.userService.login(credential).subscribe({
-            next: (token: string) => {
+            next: async (token: string) => {
               this.isLoading = false;
               console.log('Login realizado com sucesso após criação da conta:', token);
 
               // Store the token and redirect to dashboard
               if (token) {
-                window?.localStorage?.setItem('authToken', token);
-                this.dialogRef.close(createdUser);
-                this.router.navigate(['/dashboard']);
+                try {
+                  // Decodificar informações do usuário do token
+                  const payload = JSON.parse(atob(token.split('.')[1]));
+                  const userWithToken = {
+                    id: payload.id,
+                    username: payload.username,
+                    email: payload.email
+                  };
+
+                  // Usar o serviço compartilhado
+                  await this.sharedAuthWrapper.login(token, userWithToken);
+                  
+                  this.dialogRef.close(createdUser);
+                  // Navegar através do shell
+                  window.location.href = '/dashboard';
+                } catch (error) {
+                  console.error('Erro ao processar login automático:', error);
+                  this.dialogRef.close(createdUser);
+                }
               } else {
                 this.isLoading = false;
                 console.error('Token não recebido após login automático');
