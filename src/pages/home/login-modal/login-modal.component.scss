@@ -60,4 +60,16 @@
       opacity: 0.5;
     }
   }
+
+  &__button-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__button-spinner {
+    ::ng-deep .mat-mdc-progress-spinner circle {
+      stroke: currentColor;
+    }
+  }
 }

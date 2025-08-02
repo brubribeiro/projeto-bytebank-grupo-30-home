@@ -22,6 +22,7 @@
   justify-content: center;
   margin-bottom: 16px;
   position: relative;
+
   img {
     height: 120px;
   }
@@ -38,8 +39,16 @@
   margin-bottom: 16px;
 }
 
-.mat-checkbox {
+.modal-checkbox {
   margin-bottom: 18px;
+}
+
+.checkbox-error {
+  color: #f44336;
+  font-size: 0.75rem;
+  margin-top: -16px;
+  margin-bottom: 16px;
+  display: block;
 }
 
 .modal-actions {
@@ -49,8 +58,24 @@
 }
 
 button[mat-flat-button] {
-  background: #ff5722;
+  background: $brand-500;
   color: #fff;
   border-radius: 8px;
   min-width: 160px;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.modal-button-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-button-spinner {
+  ::ng-deep .mat-mdc-progress-spinner circle {
+    stroke: currentColor;
+  }
 }
