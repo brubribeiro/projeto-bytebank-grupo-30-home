@@ -137,11 +137,25 @@ export class SharedAuthServiceWrapper {
           remoteName: environment.shell.remoteName,
           exposedModule: './shared-auth'
         });
-        this.sharedAuthService = new module.SharedAuthService();
+
+        // Verificar se a função factory existe
+        if (!module.createSharedAuthService) {
+          throw new Error('createSharedAuthService function not found in module');
+        }
+
+        // Usar função factory ao invés de new
+        this.sharedAuthService = module.createSharedAuthService();
+
+        // Verificar se o serviço foi criado corretamente
+        if (!this.sharedAuthService.auth$) {
+          throw new Error('SharedAuthService not properly initialized');
+        }
 
         // Sincronizar estado inicial
         const currentState = this.sharedAuthService.getStateSnapshot();
-        this.authStateSubject.next(currentState);
+        if (currentState) {
+          this.authStateSubject.next(currentState);
+        }
 
         // Subscrever para mudanças
         this.sharedAuthService.auth$.subscribe((state: AuthState) => {
@@ -165,7 +179,14 @@ export class SharedAuthServiceWrapper {
           remoteName: environment.shell.remoteName,
           exposedModule: './shared-auth'
         });
-        this.eventBus = new module.MicrofrontendEventBus();
+
+        // Verificar se a função factory existe
+        if (!module.createMicrofrontendEventBus) {
+          throw new Error('createMicrofrontendEventBus function not found in module');
+        }
+
+        // Usar função factory ao invés de new
+        this.eventBus = module.createMicrofrontendEventBus();
       } catch (error) {
         console.error('Erro ao carregar EventBus:', error);
       }
