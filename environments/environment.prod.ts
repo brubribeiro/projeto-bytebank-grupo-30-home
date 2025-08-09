@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   apiBaseUrl: 'https://bybank-back-end.onrender.com',
   shell: {
-    remoteEntry: 'http://localhost:4200/remoteEntry.json',
+    remoteEntry: 'https://shell-projeto-bytebank-gp-30.vercel.app/remoteEntry.json',
     remoteName: 'shell-projeto-bytebank-gp-30'
   }
 };
